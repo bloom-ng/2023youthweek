@@ -1,3 +1,9 @@
+@font-face {
+    font-family: race;
+    src: url(/src/assets/Race\ Sport.ttf);
+}
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities; 
