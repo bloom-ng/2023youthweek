@@ -2,7 +2,20 @@
     font-family: race;
     src: url(/src/assets/Race\ Sport.ttf);
 }
-
+body{
+    cursor: none;
+}
+.cursor{
+    width: 20px;
+    height: 20px;
+    position: fixed;
+    background-color: white;
+    border-radius: 50%;
+    border: 1px solid red;
+    pointer-events: none;
+    mix-blend-mode: difference;
+    transform: translate(-50%, -50%);
+}
 
 @tailwind base;
 @tailwind components;

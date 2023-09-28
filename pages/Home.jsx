@@ -2,8 +2,15 @@ import HeroImage from '../src/assets/banner.jpg'
 import { Link } from 'react-router-dom'
 import '../src/index.css'
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 function Home() {
-  
+    const [cursorX, setCursorX] = useState()
+    const [cursorY, setCursorY] = useState()
+
+    window.addEventListener('mousemove', (e) =>{
+      setCursorX(e.pageX)
+      setCursorY(e.pageY)
+    })
   return (
     <motion.div
      initial= {{opacity:0}}
@@ -12,6 +19,12 @@ function Home() {
      transition={{duration: 1}}
     >
     <div>
+      <div className="cursor"
+        style={{
+          left:cursorX + 'px',
+          top:cursorY + 'px'
+        }}
+      ></div>
      
         <div className='px-10 md:px-20 flex flex-col justify-center items-center bg-gradient-to-r from-[#360023] to-[#0e063a] h-screen w-screen'>
        
