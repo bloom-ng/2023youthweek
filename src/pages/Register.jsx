@@ -4,7 +4,9 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import {AiTwotoneHome} from 'react-icons/ai'
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -64,6 +66,8 @@ export default function BasicTabs() {
       }}
       
     >
+      <Link to="/">
+      <AiTwotoneHome size={30} className='inline mr-2'/></Link>
           Invited Guest Registration
      </motion.h1>
          </div>
@@ -80,25 +84,26 @@ export default function BasicTabs() {
 {/* <h2 className='text-white font-medium tracking-[0.9px]'>Register as Individual</h2> */}
 
 <div className='my-8'>
-<input className='bg-transparent text-white border-b text-sm font-race font-thin outline-none w-72' type="name" name="" id="" placeholder='Enter Full name' />
+<input className='bg-transparent text-white border border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' type="name" name="" id="" placeholder='Enter Full name' />
 </div>
 <div className='my-8'>
-<input className='bg-transparent text-white border-b text-sm font-race font-thin outline-none w-72' type="number" name="" id="" placeholder='Enter Phone number' />
+<input className='bg-transparent text-white border-t-0 border-x-0 border-b-1-1 text-sm font-race font-thin outline-none w-72' type="number" name="" id="" placeholder='Enter Phone number' />
 </div>
 <div className='my-8'>
-<select className='bg-transparent text-white border-b text-sm font-race font-thin outline-none w-72' name="name" id="">
+<select className='bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' name="name" id="">
 <option value="">Select Church</option>
 </select>           
 </div>
 <div className='my-8'>
-<input className='bg-transparent text-white border-b text-sm font-race font-thin outline-none w-72' type="email" name="" id="" placeholder='Enter Email Address' />
+<input className='bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' type="email" name="" id="" placeholder='Enter Email Address' />
 </div>
 <div className='my-8'>
-<input className=' bg-gradient-to-r from-purple-800 to-purple-400 text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-72' type="button" value="Submit"  />
+<input className=' bg-gradient-to-r from-orange-800  to-purple-700 drop-shadow-2xl text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-72' type="button" value="Submit"  />
 
 </div>
 
-<a href='/host' className='font-race' sx={{ color: 'white' }}>Are You A Host ?</a>
+<a href='/host' className='flex justify-center items-center font-race text-white text-center' sx={{ color: 'white' }}>Are You A Host ?</a>
+
 </form>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
@@ -106,27 +111,27 @@ export default function BasicTabs() {
 {/* <h2 className='text-white font-medium tracking-[0.9px]'>Register as Church</h2> */}
 
 <div className='my-8'>
-<select className='bg-transparent text-white border-b text-sm font-race font-thin outline-none w-72' name="name" id="">
+<select className='bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' name="name" id="">
 <option value="">Select Church</option>
 </select>           
 </div>
 <div className='my-8'>
-<input className='bg-transparent text-white border-b text-sm font-race font-thin outline-none w-72' type="number" name="" id="" placeholder='Enter Phone number' />
+<input className='bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' type="number" name="" id="" placeholder='Enter Phone number' />
 </div>
 <div className='my-8'>
-<input className='bg-transparent text-white border-b text-sm font-race font-thin outline-none w-72' type="email" name="" id="" placeholder='Enter Email Address' />
+<input className='bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' type="email" name="" id="" placeholder='Enter Email Address' />
 </div>
 <div className='my-8'>
-<input className='bg-transparent text-white border-b text-sm font-race font-thin outline-none w-72' type="number" name="" id="" placeholder='Enter Number of participants' />
+<input className='bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' type="number" name="" id="" placeholder='Enter Number of participants' />
 </div>
 
 
 <div className='my-8'>
-<input className=' bg-gradient-to-r from-purple-800 to-purple-400 text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-72' type="button" value="Submit"  />
+<input className=' bg-gradient-to-r from-orange-500 to-purple-900  drop-shadow-2xl text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-72' type="button" value="Submit"  />
 
 </div>
 
-<a href='/host' className='font-race' sx={{ color: 'white' }}>Are You A Host ?</a>
+<a href='/host' className='flex justify-center items-center font-race text-white text-center' sx={{ color: 'white' }}>Are You A Host ?</a>
 
 </form>
       </CustomTabPanel>

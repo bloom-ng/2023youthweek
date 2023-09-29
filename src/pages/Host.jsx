@@ -1,5 +1,7 @@
 import React from 'react'
-import {motion, AnimatePresence} from 'framer-motion'
+import {motion} from 'framer-motion'
+import {AiTwotoneHome} from 'react-icons/ai'
+import { Link } from 'react-router-dom';
 
 
 export default function FramerAnimation() {
@@ -24,6 +26,8 @@ export default function FramerAnimation() {
       }}
       
     >
+      <Link to="/">
+      <AiTwotoneHome size={30} className='inline mr-2'/></Link>
     Host registration
     </motion.h1>
   
@@ -34,26 +38,26 @@ export default function FramerAnimation() {
     <form>
     
     <div className='my-8'>
-    <input className='bg-transparent text-white border-b text-sm font-race font-thin outline-none w-72' type="name" name="" id="" placeholder='Enter Full name' />
+    <input className='bg-transparent text-white border border-t-0 border-x-0 border-b-1  text-sm font-race font-thin outline-none w-72' type="name" name="" id="" placeholder='Enter Full name' />
     </div>
     <div className='my-8'>
-    <input className='bg-transparent text-white border-b text-sm font-race font-thin outline-none w-72' type="number" name="" id="" placeholder='Enter Phone number' />
+    <input className='bg-transparent text-white border border-t-0 border-x-0 border-b-1  text-sm font-race font-thin outline-none w-72' type="number" name="" id="" placeholder='Enter Phone number' />
     </div>
     <div className='my-8'>
-    <select className='bg-transparent text-white border-b text-sm font-race font-thin outline-none w-72' name="name" id="">
+    <select className='bg-transparent text-white border border-t-0 border-x-0 border-b-1  text-sm font-race font-thin outline-none w-72' name="name" id="">
     <option value="">Select Church</option>
     </select>           
     </div>
     <div className='my-8'>
-    <input className='bg-transparent text-white border-b text-sm font-race font-thin outline-none w-72' type="email" name="" id="" placeholder='Enter Email Address' />
+    <input className='bg-transparent text-white border border-t-0 border-x-0 border-b-1  text-sm font-race font-thin outline-none w-72' type="email" name="" id="" placeholder='Enter Email Address' />
     </div>
     <div className='my-8'>
-    <input className=' bg-gradient-to-r from-purple-800 to-purple-400 text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-72' type="button" value="Submit"  />
+    <input className=' bg-gradient-to-r from-orange-500 to-purple-900 text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-72' type="button" value="Submit"  />
 
     </div>
  
  
-<a href='/register' className='font-race text-white' sx={{ color: 'white' }}>Are You A Guest ?</a>
+<a href='/register' className='flex justify-center items-center font-race text-white text-center' sx={{ color: 'white' }}>Are You A Guest ?</a>
     </form>
     </div>
    
