@@ -3,7 +3,13 @@ import { Link } from 'react-router-dom'
 import '../index.css'
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import soundFile from '../assets/sound.mp3';
+
 function Home() {
+  const playSound = () => {
+    const audio = new Audio(soundFile);
+    audio.play();
+  };
     const [cursorX, setCursorX] = useState()
     const [cursorY, setCursorY] = useState()
 
@@ -11,6 +17,7 @@ function Home() {
       setCursorX(e.pageX)
       setCursorY(e.pageY)
     })
+ 
   return (
     <motion.div
      initial= {{opacity:0}}
@@ -53,10 +60,10 @@ function Home() {
          {/* <img className='mb-8 object-fit w-96 h-62 md:w-[500px]  md:h-[500px] shadow-md shadow-purple-100/30' src={} alt="" srcset="" /> */}
          <div className="absolute bottom-[50px] space-x-3 md:flex md:space-x-10 md:mt-3 mb-14 bg-gray-200 bg-opacity-90  p-3 w-full flex justify-center">
        
-       <Link to="/register" className='shadow-slate-800 shadow-xl text-white bg-gradient-to-r from-orange-500 to-purple-900 px-24 py-2 rounded-lg font-race  '>Guest</Link>
+       <Link to="/register" className='shadow-slate-800 shadow-xl text-white bg-gradient-to-r from-orange-500 to-purple-900 px-24 py-2 rounded-lg font-race' onClick={playSound}>Guest</Link>
+      
   
-  
-  <Link to="/host" className='shadow-slate-800 shadow-xl text-white bg-gradient-to-r from-orange-500 to-purple-900 px-24 py-2 rounded-lg font-race '>Host</Link>
+  <Link to="/host" className='shadow-slate-800 shadow-xl text-white bg-gradient-to-r from-orange-500 to-purple-900 px-24 py-2 rounded-lg font-race ' onClick={playSound}>Host</Link>
 
     
      

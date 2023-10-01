@@ -1,37 +1,18 @@
 import React from 'react'
-import {motion} from 'framer-motion'
 import {AiTwotoneHome} from 'react-icons/ai'
 import { Link } from 'react-router-dom';
 import {BsPlusCircleFill} from 'react-icons/bs'
 
-
-export default function FramerAnimation() {
+function Login() {
   return (
-    <motion.div
-     initial= {{opacity:0}}
-     animate = {{opacity:1}}
-     exit={{opacity:0}}
-     transition={{duration: 1}}
-    >
-    <div className="px-10 md:px-20 flex flex-col justify-center items-center bg-gradient-to-r from-[#360023] to-[#0e063a] h-screen w-screen">
+    <>   
+     <div className="px-10 md:px-20 flex flex-col justify-center items-center bg-gradient-to-r from-[#360023] to-[#0e063a] h-screen w-screen">
   
     <div className=' flex-col flex justify-center items-center py-4 '>
     <div className="flex justify-center text-2xl uppercase py-2 font-race items-center text-white font-semibold tracking-wide pt-4">
-    <motion.h1
-      initial={{y:100}}
-      animate={{y:0}}
-      transition={{
-        duration:"2",
-        delay: "0.5"
-
-      }}
-      
-    >
-      <Link to="/">
+    <Link to="/">
       <AiTwotoneHome size={30} className='inline mr-2'/></Link>
     Host registration
-    </motion.h1>
-  
     </div>
     
     <div className="grid grid-cols-1 md:grid-cols-1 my-3 md:gap-32">
@@ -70,7 +51,9 @@ export default function FramerAnimation() {
     </div>
     </div>
     </div>
-    </motion.div>
-    
+    </>
+
   )
 }
+
+export default Login

@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import { useState } from 'react';
 import Host from "./pages/Host";
 import Register from "./pages/Register";
+import Login from "./pages/Login"
 import '../src/index.css'
 
 function App() {
@@ -22,12 +23,11 @@ function App() {
           top:cursorY + 'px'
         }}
       ></div>
-    <Routes>
-      
+    <Routes>      
        <Route path="/" exact element={<Home/>}/>
-      <Route path="/register" element={<Register/>}/>
-      <Route path="/host" element={<Host/>}/>
-      
+      <Route path="/register" exact element={<Register/>}/>
+      <Route path="/host" exact element={<Host/>}/>
+      <Route path="/login" exact element={<Login/>}/>
     </Routes>
    </>
   )

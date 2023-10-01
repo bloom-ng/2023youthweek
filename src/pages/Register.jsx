@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import {AiTwotoneHome} from 'react-icons/ai'
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import {BsPlusCircleFill} from 'react-icons/bs'
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -82,23 +83,25 @@ export default function BasicTabs() {
       <CustomTabPanel value={value} index={0}>
       <form>
 {/* <h2 className='text-white font-medium tracking-[0.9px]'>Register as Individual</h2> */}
-
-<div className='my-8'>
-<input className='bg-transparent text-white border border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' type="name" name="" id="" placeholder='Enter Full name' />
-</div>
-<div className='my-8'>
-<input className='bg-transparent text-white border-t-0 border-x-0 border-b-1-1 text-sm font-race font-thin outline-none w-72' type="number" name="" id="" placeholder='Enter Phone number' />
-</div>
 <div className='my-8'>
 <select className='bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' name="name" id="">
 <option value="">Select Church</option>
 </select>           
+<a href="" ><button ><BsPlusCircleFill className="color-white flex justify-center items-center text-white mr-4" size={30}/></button></a>    
+    
 </div>
 <div className='my-8'>
-<input className='bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' type="email" name="" id="" placeholder='Enter Email Address' />
+<input className='bg-transparent text-white border justify-center items-center border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' type="name" name="" id="" placeholder='Enter Full name' />
 </div>
 <div className='my-8'>
-<input className=' bg-gradient-to-r from-orange-800  to-purple-700 drop-shadow-2xl text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-72' type="button" value="Submit"  />
+<input className='bg-transparent text-white border-t-0 justify-center items-center border-x-0 border-b-1-1 text-sm font-race font-thin outline-none w-72' type="number" name="" id="" placeholder='Enter Phone number' />
+</div>
+
+<div className='my-8'> 
+<input className='bg-transparent text-white border-t-0 justify-center items-center border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' type="email" name="" id="" placeholder='Enter Email Address' />
+</div>
+<div className='my-8'>
+<input className=' bg-gradient-to-r from-orange-800 justify-center items-center to-purple-700 drop-shadow-2xl text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-72' type="button" value="Submit"  />
 
 </div>
 
@@ -114,6 +117,8 @@ export default function BasicTabs() {
 <select className='bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' name="name" id="">
 <option value="">Select Church</option>
 </select>           
+<a href="" ><button ><BsPlusCircleFill className="color-white flex justify-center items-center text-white mr-4" size={30}/></button></a>    
+    
 </div>
 <div className='my-8'>
 <input className='bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' type="number" name="" id="" placeholder='Enter Phone number' />
