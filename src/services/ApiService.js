@@ -49,6 +49,28 @@ ApiService.ParticipantCreate = async (data) => {
     }
 }
 
+ApiService.ChurchParticipantsCreate = async (data) => {
+    try {
+        let res = await Request.post(endpoints.churchParticipantCreate.url, data);
+        return res.data;
+
+    } catch (error) {
+        checkAuth(error);
+        throw new Error(error);
+    }
+}
+
+ApiService.ChurchCreate = async (data) => {
+    try {
+        let res = await Request.post(endpoints.churchCreate.url, data);
+        return res.data;
+
+    } catch (error) {
+        checkAuth(error);
+        throw new Error(error);
+    }
+}
+
 
 function checkAuth(error) {
     if (error.response.status == 401 || error.response.status == 403) {

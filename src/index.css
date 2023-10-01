@@ -3,7 +3,7 @@
     src: url(/src/assets/Race_Sport.ttf);
 }
 body{
-    cursor: none;
+    /* cursor: none; */
 }
 .cursor{
     width: 22px;
