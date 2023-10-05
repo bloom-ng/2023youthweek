@@ -5,17 +5,20 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { AiTwotoneHome } from 'react-icons/ai'
+import { AiOutlineDownload, AiTwotoneHome, AiOutlineClose} from 'react-icons/ai'
+import {FaRegImage} from 'react-icons/fa'
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { BsPlusCircleFill } from 'react-icons/bs'
 import ApiService from '../services/ApiService';
 import soundFile from '../assets/sound.mp3';
 import Swal from 'sweetalert2';
+import User from './user';
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
 
+  
   return (
     <div
       role="tabpanel"
@@ -52,6 +55,7 @@ export default function BasicTabs() {
   const [churches, setChurches] = React.useState([])
   const [newChurch, setNewChurch] = React.useState({name: ""})
   const [guestImage, setGuestImage] = React.useState(null)
+  const [guestPreview, setGuestPreview] = React.useState('')
   const [modalOpen, setModalOpen] = React.useState(false);
   const [guest, setGuest] = React.useState({
     name: "",
@@ -114,30 +118,9 @@ export default function BasicTabs() {
         fData.append(key, guest[key]);
       }
       console.log(guestImage)
-      setModalOpen(true)
-      const response = await ApiService.ParticipantCreate(fData);
-      // const imgElement = document.createElement('img');
-      // imgElement.src = URL.createObjectURL(guestImage);
-      
-      // // Apply CSS styles to make the image circular
-      // imgElement.style.maxWidth = '100%';
-      // imgElement.style.borderRadius = '100%'; // Make it circular
-      // imgElement.style.display = 'block'; // Center the image
-      // Swal.fire({
-      //   icon: 'success',
-      //   html: imgElement.outerHTML,
-      //   // imageUrl: guestImage.name,
-      //   imageAlt: 'Participant Image',
-      //   title: 'I will be attending',
-      // });
-      // setGuest({
-      //   name: "",
-      //   email: "",
-      //   phone: "",
-      //   gender: "male",
-      //   type: 1,
-      //   church_id: 0,
-      // });
+      setModalOpen(true);
+      // const response = await ApiService.ParticipantCreate(fData);
+      // if(response.status){setModalOpen(true);}
     } catch (error) {
       e.target.value = "Submit";
       throw new Error(error);
@@ -185,9 +168,9 @@ export default function BasicTabs() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 1 }}
-      className='bg-gradient-to-r from-[#360023] to-[#0e063a]'
+      className='bg-gradient-to-r from-[#360023] to-[#0e063a] overflow-x-hidden'
     >
-      <div className='px-10 md:px-20 flex flex-col justify-center items-center bg-gradient-to-r from-[#360023] to-[#0e063a] w-screen min-h-screen'>
+      <div className='px-2 md:px-20 flex flex-col justify-center items-center bg-gradient-to-r from-[#360023] to-[#0e063a] w-full min-h-screen '>
         <div className='text-center text-white text-2xl font-bold uppercase py-2 font-race'>
           <motion.h1
             initial={{ y: 100 }}
@@ -216,38 +199,41 @@ export default function BasicTabs() {
             <form >
               {/* <h2 className='text-white font-medium tracking-[0.9px]'>Register as Individual</h2> */}
               <div className='my-8 flex gap-x-4'>
-                <select value={guest.church_id} onChange={e => setGuest(prev => ({...prev, church_id: e.target.value}))} className='bg-purple-800 text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' name="name" id="">
+                <select value={guest.church_id} onChange={e => setGuest(prev => ({...prev, church_id: e.target.value}))} className='bg-purple-800 text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full' name="name" id="">
                   <option value="">Select Church</option>
                   {churches.map(church => <option key={church.id} value={church.id}>{church.name}</option>)}
                 </select>
                 <button type='button' onClick={addChurch}><BsPlusCircleFill className="color-white flex justify-center items-center text-white mr-4" size={30} /></button>
 
               </div>
-              <div className='my-8'>
-                <input onChange={e => {setGuestImage(e.target.files[0]); console.log('e.target.files[0] :>> ', e.target.files[0]);}} 
-                  className='bg-transparent text-white border justify-center items-center border-t-0 border-x-0 border-b-1 text-sm  font-race font-thin outline-none w-72'
-                    accept='image/*'
+              <div className='my-8 flex flex-col border-2 justify-center'>
+                <label htmlFor="select-img" className='font-race'>Select image <FaRegImage size={30} className='inline'/></label>
+                {guestPreview && <img className='w-[100px] h-[100px] justify-center' src={guestPreview} alt="" srcset="" />}
+                <input onChange={e => {setGuestImage(e.target.files[0]) ; setGuestPreview(URL.createObjectURL(e.target.files[0]));}} 
+                  className='bg-transparent text-white border justify-center hidden items-center border-t-0 border-x-0 border-b-1 text-sm  font-race font-thin outline-none w-full'
+                    accept='image/*' id='select-img'
+                  
                    type="file"  />
               </div>
               <div className='my-8'>
                 <input value={guest.name} onChange={e => setGuest(prev => ({...prev, name: e.target.value}))} 
-                  className='bg-transparent text-white border justify-center items-center border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' type="text" name="" id="" placeholder='Enter Full name' />
+                  className='bg-transparent text-white border justify-center items-center border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full' type="text" name="" id="" placeholder='Enter Full name' />
               </div>
               <div className='my-8'>
                 <input value={guest.phone} onChange={e => setGuest(prev => ({...prev, phone: e.target.value}))}
-                  className='bg-transparent text-white border-t-0 justify-center items-center border-x-0 border-b-1-1 text-sm font-race font-thin outline-none w-72' type="text" name="" id="" placeholder='Enter Phone number' />
+                  className='bg-transparent text-white border-t-0 justify-center items-center border-x-0 border-b-1-1 text-sm font-race font-thin outline-none w-full' type="text" name="" id="" placeholder='Enter Phone number' />
               </div>
 
               <div className='my-8'>
                 <input value={guest.email} onChange={e => setGuest(prev => ({...prev, email: e.target.value}))} 
-                className='bg-transparent text-white border-t-0 justify-center items-center border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' type="email" name="" id="" placeholder='Enter Email Address' />
+                className='bg-transparent text-white border-t-0 justify-center items-center border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full' type="email" name="" id="" placeholder='Enter Email Address' />
               </div>
               <div className='my-8'>
-                <input onClick={createParticipant} className='cursor-pointer bg-gradient-to-r from-orange-800 justify-center items-center to-purple-700 drop-shadow-2xl text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-72' type="button" value="Submit" />
+                <input onClick={createParticipant} className='cursor-pointer bg-gradient-to-r from-orange-800 justify-center items-center to-purple-700 drop-shadow-2xl text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-full' type="button" value="Submit" />
 
               </div>
 
-              <a href='/host' className='cursor-pointer flex justify-center items-center font-race text-white text-center' sx={{ color: 'white' }} onClick={playSound}>Are You A Host? Click Here.</a>
+              <a href='/host' className='cursor-pointer flex justify-center items-center font-race text-white text-center whitespace-nowrap' sx={{ color: 'white' }} onClick={playSound}>Are You A Host? Click Here.</a>
 
             </form>
           </CustomTabPanel>
@@ -256,25 +242,25 @@ export default function BasicTabs() {
               {/* <h2 className='text-white font-medium tracking-[0.9px]'>Register as Church</h2> */}
 
               <div className='my-8 flex gap-x-4'>
-              <select onChange={e => null} className='bg-purple-800 text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' name="name" id="">
+              <select onChange={e => null} className='bg-purple-800 text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full' name="name" id="">
                   <option value="">Select Church</option>
                   {churches.map(church => <option key={church.id}>{church.name}</option>)}
                 </select>
                 <button type='button' onClick={addChurch}><BsPlusCircleFill className="color-white flex justify-center items-center text-white mr-4" size={30} /></button>
               </div>
               <div className='my-8'>
-                <input className='bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' type="text" name="" id="" placeholder='Enter Phone number' />
+                <input className='bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full' type="text" name="" id="" placeholder='Enter Phone number' />
               </div>
               <div className='my-8'>
-                <input className='bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' type="email" name="" id="" placeholder='Enter Email Address' />
+                <input className='bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full' type="email" name="" id="" placeholder='Enter Email Address' />
               </div>
               <div className='my-8'>
-                <input className='bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-72' type="number" name="" id="" placeholder='Enter Number of participants' />
+                <input className='bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full' type="number" name="" id="" placeholder='Enter Number of participants' />
               </div>
 
 
               <div className='my-8'>
-                <input className=' bg-gradient-to-r from-orange-500 to-purple-900  drop-shadow-2xl text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-72' type="button" value="Submit" />
+                <input className=' bg-gradient-to-r from-orange-500 to-purple-900  drop-shadow-2xl text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-full' type="button" value="Submit" />
 
               </div>
 
@@ -287,20 +273,28 @@ export default function BasicTabs() {
 
       </div>
       {modalOpen && (
-      <div className="bg-gray-800 bg-opacity-50 flex items-center justify-center fixed top-0 left-0 w-full h-full">
+      <div className="bg-gray-800 bg-opacity-50 flex items-center justify-center fixed top-0 left-0 w-screen h-screen">
         {/* Modal content */}
-        <div className="modal-content bg-white p-6">
+        <div className="flex justify-between items-center ">
+        <button className='hidden md:flex'><AiOutlineDownload size={30} className='text-white relative right-28 -top-[22px] '/></button>
+     
+        </div>
+        <div className="modal-content bg-transparent p-2 ">
           {/* Add your modal content here */}
-          <img src={URL.createObjectURL(guestImage)} alt="user-image" className='rounded-full h-[90px] w-[90px]' />
 
-          <h1>{guest.name}</h1>
+          <User image={URL.createObjectURL(guestImage)} name={guest.name}/>
+          {/* <img src={} alt="user-image" className='rounded-full h-[90px] w-[90px]' />
+        
+          <h1>{}</h1>
           <p>I will be attending</p>
           <button className='border rounded-md p-4' onClick={() => {
             closeModal();
           }}>
             Done
-          </button>
+          </button> */}
         </div>
+        <button className='hidden md:flex'  closeModal={closeModal}><AiOutlineClose size={30} className='text-white relative left-28 -top-[22px]'/> </button>
+     
       </div>
     )}
     </motion.div>

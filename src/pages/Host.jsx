@@ -95,7 +95,48 @@ export default function FramerAnimation() {
             </motion.h1>
 
           </div>
+          <CustomTabPanel value={value} index={0}>
+            <form >
+              {/* <h2 className='text-white font-medium tracking-[0.9px]'>Register as Individual</h2> */}
+              <div className='my-8 flex gap-x-4'>
+                <select value={guest.church_id} onChange={e => setGuest(prev => ({...prev, church_id: e.target.value}))} className='bg-purple-800 text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full' name="name" id="">
+                  <option value="">Select Church</option>
+                  {churches.map(church => <option key={church.id} value={church.id}>{church.name}</option>)}
+                </select>
+                <button type='button' onClick={addChurch}><BsPlusCircleFill className="color-white flex justify-center items-center text-white mr-4" size={30} /></button>
 
+              </div>
+              <div className='my-8 flex flex-col border-2 justify-center'>
+                <label htmlFor="select-img" className='font-race'>Select image <FaRegImage size={30} className='inline'/></label>
+                {guestPreview && <img className='w-[100px] h-[100px] justify-center' src={guestPreview} alt="" srcset="" />}
+                <input onChange={e => {setGuestImage(e.target.files[0]) ; setGuestPreview(URL.createObjectURL(e.target.files[0]));}} 
+                  className='bg-transparent text-white border justify-center hidden items-center border-t-0 border-x-0 border-b-1 text-sm  font-race font-thin outline-none w-full'
+                    accept='image/*' id='select-img'
+                  
+                   type="file"  />
+              </div>
+              <div className='my-8'>
+                <input value={guest.name} onChange={e => setGuest(prev => ({...prev, name: e.target.value}))} 
+                  className='bg-transparent text-white border justify-center items-center border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full' type="text" name="" id="" placeholder='Enter Full name' />
+              </div>
+              <div className='my-8'>
+                <input value={guest.phone} onChange={e => setGuest(prev => ({...prev, phone: e.target.value}))}
+                  className='bg-transparent text-white border-t-0 justify-center items-center border-x-0 border-b-1-1 text-sm font-race font-thin outline-none w-full' type="text" name="" id="" placeholder='Enter Phone number' />
+              </div>
+
+              <div className='my-8'>
+                <input value={guest.email} onChange={e => setGuest(prev => ({...prev, email: e.target.value}))} 
+                className='bg-transparent text-white border-t-0 justify-center items-center border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full' type="email" name="" id="" placeholder='Enter Email Address' />
+              </div>
+              <div className='my-8'>
+                <input onClick={createParticipant} className='cursor-pointer bg-gradient-to-r from-orange-800 justify-center items-center to-purple-700 drop-shadow-2xl text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-full' type="button" value="Submit" />
+
+              </div>
+
+              <a href='/host' className='cursor-pointer flex justify-center items-center font-race text-white text-center whitespace-nowrap' sx={{ color: 'white' }} onClick={playSound}>Are You A Host? Click Here.</a>
+
+            </form>
+          </CustomTabPanel>
           <div className="grid grid-cols-1 md:grid-cols-1 my-3 md:gap-32">
             <div>
               <form>

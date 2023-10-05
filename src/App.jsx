@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Host from "./pages/Host";
 import Guest from "./pages/Guest";
 import Login from "./pages/Login"
+import User from "./pages/user"
 import '../src/index.css'
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
       <Route path="/register" exact element={<Guest/>}/>
       <Route path="/host" exact element={<Host/>}/>
       <Route path="/login" exact element={<Login/>}/>
+      <Route path="/user" exact element={<User/>}/>
     </Routes>
    </>
   )
