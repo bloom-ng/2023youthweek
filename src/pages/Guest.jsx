@@ -62,6 +62,7 @@ export default function BasicTabs() {
   const [guestImage, setGuestImage] = React.useState(null);
   const [guestPreview, setGuestPreview] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
+  const posterRef = React.useRef(null);
   const [guest, setGuest] = React.useState({
     name: "",
     email: "",
@@ -79,7 +80,6 @@ export default function BasicTabs() {
     type: 1,
     church_id: 0,
   });
-  const posterRef = React.useRef(null);
 
   const downloadPoster = () => {
     html2canvas(posterRef.current, {
@@ -97,8 +97,8 @@ export default function BasicTabs() {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      closeModal();
     });
+    // closeModal();
   };
 
   const playSound = () => {
@@ -151,7 +151,7 @@ export default function BasicTabs() {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: response.message,
+          text: "An Error Occured please try again later.",
         });
       }
     } catch (error) {
