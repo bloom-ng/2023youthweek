@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 import { FaRegImage } from "react-icons/fa";
 import html2canvas from "html2canvas";
 import Bg from "../assets/background.png";
+import At from "../assets/bg.jpg"
 
 export default function FramerAnimation() {
   const [churches, setChurches] = React.useState([]);
@@ -56,6 +57,7 @@ export default function FramerAnimation() {
       const response = await ApiService.ParticipantCreate(fData);
       if (response.data) {
         setModalOpen(true);
+        downloadPoster()
       } else if (response.errors) {
         Swal.fire({
           icon: "error",
@@ -119,6 +121,7 @@ export default function FramerAnimation() {
     })();
   }, []);
   return (
+    <>
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -137,20 +140,23 @@ export default function FramerAnimation() {
               }}
             >
               <Link to="/">
-                <AiTwotoneHome size={30} className="inline mr-2" />
+                <AiTwotoneHome size={30} className="inline mb-2" />
               </Link>
+              <div>
               Host Registration
+
+              </div>
             </motion.h1>
           </div>
           <div>
             <form>
-              <div className="my-8 flex flex-col border-2 justify-center text-white">
-                <label htmlFor="select-img" className="font-race">
+              <div className="my-8 flex flex-col  justify-center text-white">
+                <label htmlFor="select-img" className="font-race border-b-2 w-72">
                   Select image <FaRegImage size={30} className="inline" />
                 </label>
                 {hostPreview && (
                   <img
-                    className="w-[100px] h-[100px] justify-center"
+                    className="w-[100px] h-[100px] mx-auto justify-center"
                     src={hostPreview}
                     alt=""
                   />
@@ -160,7 +166,7 @@ export default function FramerAnimation() {
                     setHostImage(e.target.files[0]);
                     setHostPreview(URL.createObjectURL(e.target.files[0]));
                   }}
-                  className="bg-transparent text-white border justify-center hidden items-center border-t-0 border-x-0 border-b-1 text-sm  font-race font-thin outline-none w-full"
+                  className="bg-transparent text-white  justify-center hidden items-center text-sm  font-race font-thin outline-none w-full"
                   accept="image/*"
                   id="select-img"
                   type="file"
@@ -205,7 +211,7 @@ export default function FramerAnimation() {
               </div>
               <div className="my-8">
                 <input
-                  onClick={createParticipant}
+                  onClick={(e) => { playSound(); createParticipant()}}
                   className=" bg-gradient-to-r from-orange-500 to-purple-900 text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-72"
                   type="button"
                   value="Submit"
@@ -224,40 +230,41 @@ export default function FramerAnimation() {
           </div>
         </div>
       </div>
-      {modalOpen && (
-        <div className="bg-gray-800 bg-opacity-50 flex  flex-col items-center justify-center absolute top-0 left-0 w-screen h-screen">
+     
+    </motion.div>
+    {modalOpen && (
+        <div className="bg-gradient-to-r from-[#360023] to-[#0e063a] overflow-x-hidden bg-opacity-50 z-50  flex-col items-center justify-center fixed top-0 left-0 w-screen min-h-full">
           {/* Modal content */}
-          <div className="flex justify-center items-center gap-52 z-10">
-            <button className="mb-20" onClick={downloadPoster}>
+          <div className="flex justify-around items-center">
+            <button className=" font-race" onClick={downloadPoster}>
               <AiOutlineDownload size={30} className="text-white" />
             </button>
-            <button className="mb-20" onClick={closeModal}>
-              <AiOutlineClose size={30} className="text-white" />
+            <button className=" font-race" onClick={closeModal}>
+               <AiOutlineClose size={30} className="text-white" />
             </button>
           </div>
 
-          <div className="modal-content" ref={posterRef}>
-            {/* Add your modal content here */}
-            {/* <User image={URL.createObjectURL(guestImage)} name={guest.name} /> */}
-
-            <div className="flex flex-col justify-center items-center w-80 h-80">
-              <img src={Bg} className="absolute" alt="" />
-              <div className="relative top-[-36px]">
+          <div ref={posterRef} className="relative md:h-4/5 md:w-1/2 sm:h-4/5 sm:w-4/5 h-full w-full mt-10 mx-auto" >
+            <img src={Bg} alt="" className="block w-full h-full" /> 
+            <div className="absolute top-0 left-0 w-full h-2/3 flex flex-col items-center justify-center " >
+              <div className="mt-4 md:mt-8">
                 <img
-                  src={URL.createObjectURL(hostImage)}
+                  src={hostImage ? URL.createObjectURL(hostImage) : ""}
                   alt="user image"
-                  className=" w-40 h-40 rounded-full object-cover"
+                  className={` 2xl:h-96 xl:h-60 lg:h-52 md:h-44 sm:h-40 h-32 w-auto rounded-full object-cover ${hostImage ? "" : "hidden"}`}
                 />
               </div>
-              <div className="relative top-[-35px]">
-                <p className="text-center text-white uppercase font-medium font-race ">
+              <div className=" mt-4 lg:mt-8">
+                <p className="text-center text-white uppercase font-medium font-race lg:text-xl  text-sm ">
                   {host.name}
                 </p>
               </div>
             </div>
           </div>
+
+          
         </div>
       )}
-    </motion.div>
+    </>
   );
 }

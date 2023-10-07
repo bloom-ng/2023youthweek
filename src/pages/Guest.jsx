@@ -82,12 +82,14 @@ export default function BasicTabs() {
   });
 
   const downloadPoster = () => {
+    window.scrollTo(0,0)
     html2canvas(posterRef.current, {
       backgroundColor: "transparent",
       // scale: "5",
       allowTaint: true,
       useCORS: true,
       logging: false,
+      
     }).then((canvas) => {
       const dataURL = canvas.toDataURL("image/png");
       console.log(dataURL);
@@ -147,6 +149,7 @@ export default function BasicTabs() {
       const response = await ApiService.ParticipantCreate(fData);
       if (response.data) {
         setModalOpen(true);
+        downloadPoster();
       } else if (response.errors) {
         Swal.fire({
           icon: "error",
@@ -204,12 +207,13 @@ export default function BasicTabs() {
     })();
   }, []);
   return (
+    <>
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 1 }}
-      className="bg-gradient-to-r from-[#360023] to-[#0e063a] overflow-x-hidden"
+      className="bg-gradient-to-r from-[#360023] to-[#0e063a] overflow-x-hidden px-8"
     >
       <div className="px-2 md:px-20 flex flex-col justify-center items-center bg-gradient-to-r from-[#360023] to-[#0e063a] w-full min-h-screen ">
         <div className="text-center text-white text-2xl font-bold uppercase py-2 font-race">
@@ -222,9 +226,12 @@ export default function BasicTabs() {
             }}
           >
             <Link to="/">
-              <AiTwotoneHome size={30} className="inline mr-2" />
+              <AiTwotoneHome size={30} className="inline mt-4" />
             </Link>
+            <div className="">
             Invited Guest Registration
+
+            </div>
           </motion.h1>
         </div>
         <Box
@@ -256,7 +263,7 @@ export default function BasicTabs() {
                   id=""
                 >
                   <option value="">Select Church</option>
-                  {churches.map((church) => (
+                  {churches.filter(c => c.id != 1).map((church) => (
                     <option key={church.id} value={church.id}>
                       {church.name}
                     </option>
@@ -335,7 +342,7 @@ export default function BasicTabs() {
               </div>
               <div className="my-8">
                 <input
-                  onClick={createParticipant}
+                  onClick={(e) => {playSound(); createParticipant()}}
                   className="cursor-pointer bg-gradient-to-r from-orange-800 justify-center items-center to-purple-700 drop-shadow-2xl text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-full"
                   type="button"
                   value="Submit"
@@ -422,23 +429,42 @@ export default function BasicTabs() {
           </CustomTabPanel>
         </Box>
       </div>
-      {modalOpen && (
-        <div className="bg-gray-800 bg-opacity-50 flex  flex-col items-center justify-center absolute top-0 left-0 w-screen h-screen">
+      
+    </motion.div>
+    {modalOpen && (
+        <div className="bg-gradient-to-r from-[#360023] to-[#0e063a] overflow-x-hidden bg-opacity-50 z-50  flex-col items-center justify-center fixed top-0 left-0 w-screen min-h-full">
           {/* Modal content */}
-          <div className="flex justify-center items-center gap-52 z-10">
-            <button className="mb-20" onClick={downloadPoster}>
+          <div className="flex justify-around items-center">
+            <button className=" font-race" onClick={downloadPoster}>
               <AiOutlineDownload size={30} className="text-white" />
             </button>
-            <button className="mb-20" onClick={closeModal}>
-              <AiOutlineClose size={30} className="text-white" />
+            <button className=" font-race" onClick={closeModal}>
+               <AiOutlineClose size={30} className="text-white" />
             </button>
           </div>
 
-          <div className="modal-content" ref={posterRef}>
-            {/* Add your modal content here */}
-            {/* <User image={URL.createObjectURL(guestImage)} name={guest.name} /> */}
+          <div ref={posterRef} className="relative md:h-4/5 md:w-1/2 sm:h-4/5 sm:w-4/5 h-full w-full mt-10 mx-auto" >
+            <img src={Bg} alt="" className="block w-full h-full" /> 
+            <div className="absolute top-0 left-0 w-full h-2/3 flex flex-col items-center justify-center " >
+              <div className="mt-4 md:mt-8">
+              <img
+                  src={guestImage ? URL.createObjectURL(guestImage) : ""}
+                  alt="user image"
+                  className={` 2xl:h-96 xl:h-60 lg:h-52 md:h-44 sm:h-40 h-32 w-auto rounded-full object-cover ${guestImage ? "" : "hidden"}`}
+                  />
+              </div>
+              <div className=" mt-4 lg:mt-8">
+                <p className="text-center text-white uppercase font-medium font-race lg:text-xl  text-sm ">
+                  {guest.name}
+                </p>
+              </div>
+            </div>
+          </div>
 
-            <div className="flex flex-col justify-center items-center w-80 h-80">
+          {/* <div className="modal-content " ref={posterRef}>
+           
+
+            <div className="flex flex-col justify-center items-center w-80 h-80 ">
               <img src={Bg} className="absolute" alt="" />
               <div className="relative top-[-36px]">
                 <img
@@ -453,9 +479,9 @@ export default function BasicTabs() {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       )}
-    </motion.div>
+    </>
   );
 }
