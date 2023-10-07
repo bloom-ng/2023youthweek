@@ -17,6 +17,7 @@ import Bg from "../assets/background.png";
 import At from "../assets/bg.jpg";
 
 export default function FramerAnimation() {
+  const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
   const [churches, setChurches] = React.useState([]);
   const [newChurch, setNewChurch] = React.useState({ name: "" });
   const [hostImage, setHostImage] = React.useState(null);
@@ -46,37 +47,6 @@ export default function FramerAnimation() {
     }
   };
 
-  const createParticipant = async (e) => {
-    try {
-      e.target.value = "Processing";
-      const fData = new FormData();
-      fData.append("image", hostImage);
-      for (const key in host) {
-        fData.append(key, host[key]);
-      }
-      const response = await ApiService.ParticipantCreate(fData);
-      if (response.data) {
-        setModalOpen(true);
-        downloadPoster();
-      } else if (response.errors) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "An Error Occured please try again later.",
-        });
-      }
-    } catch (error) {
-      e.target.value = "Submit";
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: error.message,
-      });
-      throw new Error(error);
-    }
-    e.target.value = "Submit";
-  };
-
   const downloadPoster = () => {
     html2canvas(posterRef.current, {
       backgroundColor: "transparent",
@@ -95,6 +65,56 @@ export default function FramerAnimation() {
       document.body.removeChild(link);
     });
     // closeModal();
+  };
+
+  const createParticipant = async (e) => {
+    e.target.value = "Processing";
+
+    // Validate fields
+    if (!host.name || !host.phone || !host.email || !hostImage) {
+      Swal.fire({
+        title: "Error",
+        icon: "warning",
+        text: "Please fill all the fields",
+      });
+      e.target.value = "Submit";
+      return; // Stop execution if any field is empty
+    } else {
+      if (hostImage.size > MAX_IMAGE_SIZE) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "File too large",
+        });
+        e.target.value = "Submit";
+        return;
+      }
+      const fData = new FormData();
+      fData.append("image", hostImage);
+
+      for (const key in host) {
+        fData.append(key, host[key]);
+      }
+
+      const response = await ApiService.ParticipantCreate(fData);
+      if (response.data) {
+        setModalOpen(true);
+        downloadPoster();
+      } else if (response?.response?.data?.errors) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: response?.response?.data?.message,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: response.message,
+        });
+      }
+    }
+    e.target.value = "Submit";
   };
 
   const closeModal = () => {
@@ -188,7 +208,7 @@ export default function FramerAnimation() {
                       setHost((prev) => ({ ...prev, phone: e.target.value }))
                     }
                     className="bg-transparent text-white border border-t-0 border-x-0 border-b-1  text-sm font-race font-thin outline-none w-72"
-                    type="number"
+                    type="tel"
                     placeholder="Enter Phone number"
                   />
                 </div>

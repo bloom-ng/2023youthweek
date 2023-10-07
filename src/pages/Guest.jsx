@@ -56,6 +56,7 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs() {
+  const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
   const [value, setValue] = React.useState(0);
   const [churches, setChurches] = React.useState([]);
   const [newChurch, setNewChurch] = React.useState({ name: "" });
@@ -138,33 +139,57 @@ export default function BasicTabs() {
   };
 
   const createParticipant = async (e) => {
-    // e.prevent.default();
-    try {
-      e.target.value = "Processing";
+    e.target.value = "Processing";
+
+    // Validate fields
+    if (
+      !guest.name ||
+      !guest.phone ||
+      !guest.email ||
+      !guestImage ||
+      guest.church_id == 0
+    ) {
+      Swal.fire({
+        title: "Error",
+        icon: "warning",
+        text: "Please fill all the fields",
+      });
+      e.target.value = "Submit";
+      return; // Stop execution if any field is empty
+    } else {
+      if (guestImage.size > MAX_IMAGE_SIZE) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "File too large",
+        });
+        e.target.value = "Submit";
+        return;
+      }
       const fData = new FormData();
       fData.append("image", guestImage);
+
       for (const key in guest) {
         fData.append(key, guest[key]);
       }
+
       const response = await ApiService.ParticipantCreate(fData);
       if (response.data) {
         setModalOpen(true);
         downloadPoster();
-      } else if (response.errors) {
+      } else if (response?.response?.data?.errors) {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "An Error Occured please try again later.",
+          text: response?.response?.data?.message,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: response.message,
         });
       }
-    } catch (error) {
-      e.target.value = "Submit";
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: error.message,
-      });
-      throw new Error(error);
     }
     e.target.value = "Submit";
   };
