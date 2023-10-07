@@ -14,7 +14,7 @@ import Swal from "sweetalert2";
 import { FaRegImage } from "react-icons/fa";
 import html2canvas from "html2canvas";
 import Bg from "../assets/background.png";
-import At from "../assets/bg.jpg"
+import At from "../assets/bg.jpg";
 
 export default function FramerAnimation() {
   const [churches, setChurches] = React.useState([]);
@@ -57,7 +57,7 @@ export default function FramerAnimation() {
       const response = await ApiService.ParticipantCreate(fData);
       if (response.data) {
         setModalOpen(true);
-        downloadPoster()
+        downloadPoster();
       } else if (response.errors) {
         Swal.fire({
           icon: "error",
@@ -122,117 +122,115 @@ export default function FramerAnimation() {
   }, []);
   return (
     <>
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 1 }}
-    >
-      <div className="px-10 md:px-20 flex flex-col justify-center items-center bg-gradient-to-r from-[#360023] to-[#0e063a] h-screen w-screen">
-        <div className=" flex-col flex justify-center items-center py-4 ">
-          <div className="text-center text-white text-2xl font-bold uppercase py-2 font-race">
-            <motion.h1
-              initial={{ y: 100 }}
-              animate={{ y: 0 }}
-              transition={{
-                duration: "2",
-                delay: "0.5",
-              }}
-            >
-              <Link to="/">
-                <AiTwotoneHome size={30} className="inline mb-2" />
-              </Link>
-              <div>
-              Host Registration
-
-              </div>
-            </motion.h1>
-          </div>
-          <div>
-            <form>
-              <div className="my-8 flex flex-col  justify-center text-white">
-                <label htmlFor="select-img" className="font-race border-b-2 w-72">
-                  Select image <FaRegImage size={30} className="inline" />
-                </label>
-                {hostPreview && (
-                  <img
-                    className="w-[100px] h-[100px] mx-auto justify-center"
-                    src={hostPreview}
-                    alt=""
-                  />
-                )}
-                <input
-                  onChange={(e) => {
-                    setHostImage(e.target.files[0]);
-                    setHostPreview(URL.createObjectURL(e.target.files[0]));
-                  }}
-                  className="bg-transparent text-white  justify-center hidden items-center text-sm  font-race font-thin outline-none w-full"
-                  accept="image/*"
-                  id="select-img"
-                  type="file"
-                />
-              </div>
-              <div className="my-8">
-                <input
-                  onChange={(e) =>
-                    setHost((prev) => ({ ...prev, name: e.target.value }))
-                  }
-                  className="bg-transparent text-white border border-t-0 border-x-0 border-b-1  text-sm font-race font-thin outline-none w-72"
-                  type="text"
-                  name=""
-                  id=""
-                  placeholder="Enter Full name"
-                />
-              </div>
-              <div className="my-8">
-                <input
-                  onChange={(e) =>
-                    setHost((prev) => ({ ...prev, phone: e.target.value }))
-                  }
-                  className="bg-transparent text-white border border-t-0 border-x-0 border-b-1  text-sm font-race font-thin outline-none w-72"
-                  type="number"
-                  name=""
-                  id=""
-                  placeholder="Enter Phone number"
-                />
-              </div>
-
-              <div className="my-8">
-                <input
-                  onChange={(e) =>
-                    setHost((prev) => ({ ...prev, email: e.target.value }))
-                  }
-                  className="bg-transparent text-white border border-t-0 border-x-0 border-b-1  text-sm font-race font-thin outline-none w-72"
-                  type="email"
-                  name=""
-                  id=""
-                  placeholder="Enter Email Address"
-                />
-              </div>
-              <div className="my-8">
-                <input
-                  onClick={(e) => { playSound(); createParticipant()}}
-                  className=" bg-gradient-to-r from-orange-500 to-purple-900 text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-72"
-                  type="button"
-                  value="Submit"
-                />
-              </div>
-
-              <a
-                href="/register"
-                className="flex justify-center items-center font-race text-white text-center"
-                style={{ color: "white" }}
-                onClick={playSound}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <div className="px-10 md:px-20 flex flex-col justify-center items-center bg-gradient-to-r from-[#360023] to-[#0e063a] h-screen w-screen">
+          <div className=" flex-col flex justify-center items-center py-4 ">
+            <div className="text-center text-white text-2xl font-bold uppercase py-2 font-race">
+              <motion.h1
+                initial={{ y: 100 }}
+                animate={{ y: 0 }}
+                transition={{
+                  duration: "2",
+                  delay: "0.5",
+                }}
               >
-                Are You A Guest? Click Here
-              </a>
-            </form>
+                <Link to="/">
+                  <AiTwotoneHome size={30} className="inline mb-2" />
+                </Link>
+                <div>Host Registration</div>
+              </motion.h1>
+            </div>
+            <div>
+              <form>
+                <div className="my-8 flex flex-col  justify-center text-white">
+                  <label
+                    htmlFor="select-img"
+                    className="font-race border-b-2 w-72"
+                  >
+                    Select image <FaRegImage size={30} className="inline" />
+                  </label>
+                  {hostPreview && (
+                    <img
+                      className="w-[100px] h-[100px] mx-auto justify-center"
+                      src={hostPreview}
+                      alt=""
+                    />
+                  )}
+                  <input
+                    onChange={(e) => {
+                      setHostImage(e.target.files[0]);
+                      setHostPreview(URL.createObjectURL(e.target.files[0]));
+                    }}
+                    className="bg-transparent text-white  justify-center hidden items-center text-sm  font-race font-thin outline-none w-full"
+                    accept="image/*"
+                    id="select-img"
+                    type="file"
+                  />
+                </div>
+                <div className="my-8">
+                  <input
+                    onChange={(e) =>
+                      setHost((prev) => ({ ...prev, name: e.target.value }))
+                    }
+                    className="bg-transparent text-white border border-t-0 border-x-0 border-b-1  text-sm font-race font-thin outline-none w-72"
+                    type="text"
+                    placeholder="Enter Full name"
+                  />
+                </div>
+                <div className="my-8">
+                  <input
+                    onChange={(e) =>
+                      setHost((prev) => ({ ...prev, phone: e.target.value }))
+                    }
+                    className="bg-transparent text-white border border-t-0 border-x-0 border-b-1  text-sm font-race font-thin outline-none w-72"
+                    type="number"
+                    placeholder="Enter Phone number"
+                  />
+                </div>
+
+                <div className="my-8">
+                  <input
+                    onChange={(e) =>
+                      setHost((prev) => ({ ...prev, email: e.target.value }))
+                    }
+                    className="bg-transparent text-white border border-t-0 border-x-0 border-b-1  text-sm font-race font-thin outline-none w-72"
+                    type="email"
+                    name=""
+                    id=""
+                    placeholder="Enter Email Address"
+                  />
+                </div>
+                <div className="my-8">
+                  <input
+                    onClick={(e) => {
+                      createParticipant(e);
+                      playSound;
+                    }}
+                    className="cursor-pointer bg-gradient-to-r from-orange-500 to-purple-900 text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-72"
+                    type="button"
+                    value="Submit"
+                  />
+                </div>
+
+                <a
+                  href="/register"
+                  className="flex justify-center items-center font-race text-white text-center"
+                  style={{ color: "white" }}
+                  onClick={playSound}
+                >
+                  Are You A Guest? Click Here
+                </a>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-     
-    </motion.div>
-    {modalOpen && (
+      </motion.div>
+      {modalOpen && (
         <div className="bg-gradient-to-r from-[#360023] to-[#0e063a] overflow-x-hidden bg-opacity-50 z-50  flex-col items-center justify-center fixed top-0 left-0 w-screen min-h-full">
           {/* Modal content */}
           <div className="flex justify-around items-center">
@@ -240,18 +238,23 @@ export default function FramerAnimation() {
               <AiOutlineDownload size={30} className="text-white" />
             </button>
             <button className=" font-race" onClick={closeModal}>
-               <AiOutlineClose size={30} className="text-white" />
+              <AiOutlineClose size={30} className="text-white" />
             </button>
           </div>
 
-          <div ref={posterRef} className="relative md:h-4/5 md:w-1/2 sm:h-4/5 sm:w-4/5 h-full w-full mt-10 mx-auto" >
-            <img src={Bg} alt="" className="block w-full h-full" /> 
-            <div className="absolute top-0 left-0 w-full h-2/3 flex flex-col items-center justify-center " >
+          <div
+            ref={posterRef}
+            className="relative md:h-4/5 md:w-1/2 sm:h-4/5 sm:w-4/5 h-full w-full mt-10 mx-auto"
+          >
+            <img src={Bg} alt="" className="block w-full h-full" />
+            <div className="absolute top-0 left-0 w-full h-2/3 flex flex-col items-center justify-center ">
               <div className="mt-4 md:mt-8">
                 <img
                   src={hostImage ? URL.createObjectURL(hostImage) : ""}
                   alt="user image"
-                  className={` 2xl:h-96 xl:h-60 lg:h-52 md:h-44 sm:h-40 h-32 w-auto rounded-full object-cover ${hostImage ? "" : "hidden"}`}
+                  className={` 2xl:h-96 xl:h-60 lg:h-52 md:h-44 sm:h-40 h-32 w-auto rounded-full object-cover ${
+                    hostImage ? "" : "hidden"
+                  }`}
                 />
               </div>
               <div className=" mt-4 lg:mt-8">
@@ -261,8 +264,6 @@ export default function FramerAnimation() {
               </div>
             </div>
           </div>
-
-          
         </div>
       )}
     </>

@@ -82,14 +82,13 @@ export default function BasicTabs() {
   });
 
   const downloadPoster = () => {
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
     html2canvas(posterRef.current, {
       backgroundColor: "transparent",
       // scale: "5",
       allowTaint: true,
       useCORS: true,
       logging: false,
-      
     }).then((canvas) => {
       const dataURL = canvas.toDataURL("image/png");
       console.log(dataURL);
@@ -139,6 +138,7 @@ export default function BasicTabs() {
   };
 
   const createParticipant = async (e) => {
+    // e.prevent.default();
     try {
       e.target.value = "Processing";
       const fData = new FormData();
@@ -208,230 +208,229 @@ export default function BasicTabs() {
   }, []);
   return (
     <>
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 1 }}
-      className="bg-gradient-to-r from-[#360023] to-[#0e063a] overflow-x-hidden px-8"
-    >
-      <div className="px-2 md:px-20 flex flex-col justify-center items-center bg-gradient-to-r from-[#360023] to-[#0e063a] w-full min-h-screen ">
-        <div className="text-center text-white text-2xl font-bold uppercase py-2 font-race">
-          <motion.h1
-            initial={{ y: 100 }}
-            animate={{ y: 0 }}
-            transition={{
-              duration: "2",
-              delay: "0.5",
-            }}
-          >
-            <Link to="/">
-              <AiTwotoneHome size={30} className="inline mt-4" />
-            </Link>
-            <div className="">
-            Invited Guest Registration
-
-            </div>
-          </motion.h1>
-        </div>
-        <Box
-          sx={{ width: "100%" }}
-          className="text-white flex flex-col justify-center items-center"
-        >
-          <Box>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label="basic tabs example"
-              className="whitespace-nowrap"
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1 }}
+        className="bg-gradient-to-r from-[#360023] to-[#0e063a] overflow-x-hidden px-8"
+      >
+        <div className="px-2 md:px-20 flex flex-col justify-center items-center bg-gradient-to-r from-[#360023] to-[#0e063a] w-full min-h-screen ">
+          <div className="text-center text-white text-2xl font-bold uppercase py-2 font-race">
+            <motion.h1
+              initial={{ y: 100 }}
+              animate={{ y: 0 }}
+              transition={{
+                duration: "2",
+                delay: "0.5",
+              }}
             >
-              <Tab sx={{ color: "white" }} label=" " {...a11yProps(0)} />
-              {/* <Tab sx={{ color: 'white' }} label=" Church" {...a11yProps(1)} /> */}
-            </Tabs>
+              <Link to="/">
+                <AiTwotoneHome size={30} className="inline mt-4" />
+              </Link>
+              <div className="">Invited Guest Registration</div>
+            </motion.h1>
+          </div>
+          <Box
+            sx={{ width: "100%" }}
+            className="text-white flex flex-col justify-center items-center"
+          >
+            <Box>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+                className="whitespace-nowrap"
+              >
+                <Tab sx={{ color: "white" }} label=" " {...a11yProps(0)} />
+                {/* <Tab sx={{ color: 'white' }} label=" Church" {...a11yProps(1)} /> */}
+              </Tabs>
+            </Box>
+            <CustomTabPanel value={value} index={0}>
+              <form>
+                <div className="my-8 flex gap-x-4">
+                  <select
+                    value={guest.church_id}
+                    onChange={(e) =>
+                      setGuest((prev) => ({
+                        ...prev,
+                        church_id: e.target.value,
+                      }))
+                    }
+                    className="bg-purple-800 text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full"
+                    name="name"
+                    id=""
+                  >
+                    <option value="">Select Church</option>
+                    {churches
+                      .filter((c) => c.id != 1)
+                      .map((church) => (
+                        <option key={church.id} value={church.id}>
+                          {church.name}
+                        </option>
+                      ))}
+                  </select>
+                  <button type="button" onClick={addChurch}>
+                    <BsPlusCircleFill
+                      className="color-white flex justify-center items-center text-white mr-4"
+                      size={30}
+                    />
+                  </button>
+                </div>
+                <div className="my-8 flex flex-col border-2 justify-center">
+                  <label htmlFor="select-img" className="font-race">
+                    Select image <FaRegImage size={30} className="inline" />
+                  </label>
+                  {guestPreview && (
+                    <img
+                      className="w-[100px] h-[100px] rounded-full justify-center"
+                      src={guestPreview}
+                      alt=""
+                    />
+                  )}
+                  <input
+                    onChange={(e) => {
+                      setGuestImage(e.target.files[0]);
+                      setGuestPreview(URL.createObjectURL(e.target.files[0]));
+                    }}
+                    className="bg-transparent text-white border justify-center hidden items-center border-t-0 border-x-0 border-b-1 text-sm  font-race font-thin outline-none w-full"
+                    accept="image/*"
+                    id="select-img"
+                    type="file"
+                  />
+                </div>
+                <div className="my-8">
+                  <input
+                    value={guest.name}
+                    onChange={(e) =>
+                      setGuest((prev) => ({ ...prev, name: e.target.value }))
+                    }
+                    className="bg-transparent text-white border justify-center items-center border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full"
+                    type="text"
+                    name=""
+                    id=""
+                    placeholder="Enter Full name"
+                    required
+                  />
+                </div>
+                <div className="my-8">
+                  <input
+                    value={guest.phone}
+                    onChange={(e) =>
+                      setGuest((prev) => ({ ...prev, phone: e.target.value }))
+                    }
+                    className="bg-transparent text-white border-t-0 justify-center items-center border-x-0 border-b-1-1 text-sm font-race font-thin outline-none w-full"
+                    type="tel"
+                    placeholder="Enter Phone number"
+                    required
+                  />
+                </div>
+
+                <div className="my-8">
+                  <input
+                    value={guest.email}
+                    onChange={(e) =>
+                      setGuest((prev) => ({ ...prev, email: e.target.value }))
+                    }
+                    className="bg-transparent text-white border-t-0 justify-center items-center border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full"
+                    type="email"
+                    placeholder="Enter Email Address"
+                  />
+                </div>
+                <div className="my-8">
+                  <input
+                    onClick={(e) => {
+                      createParticipant(e);
+                      playSound;
+                    }}
+                    className="cursor-pointer bg-gradient-to-r from-orange-800 justify-center items-center to-purple-700 drop-shadow-2xl text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-full"
+                    type="button"
+                    value="Submit"
+                  />
+                </div>
+
+                <a
+                  href="/host"
+                  className="cursor-pointer flex justify-center items-center font-race text-white text-center whitespace-nowrap"
+                  style={{ color: "white" }}
+                  onClick={playSound}
+                >
+                  Are You A Host? Click Here.
+                </a>
+              </form>
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={1}>
+              <form onSubmit={createParticipant}>
+                {/* <h2 className='text-white font-medium tracking-[0.9px]'>Register as Church</h2> */}
+
+                <div className="my-8 flex gap-x-4">
+                  <select
+                    onChange={(e) => null}
+                    className="bg-purple-800 text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full"
+                    name="name"
+                    id=""
+                  >
+                    <option value="">Select Church</option>
+                    {churches.map((church) => (
+                      <option key={church.id}>{church.name}</option>
+                    ))}
+                  </select>
+                  <button type="button" onClick={addChurch}>
+                    <BsPlusCircleFill
+                      className="color-white flex justify-center items-center text-white mr-4"
+                      size={30}
+                    />
+                  </button>
+                </div>
+                <div className="my-8">
+                  <input
+                    className="bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full"
+                    type="text"
+                    name=""
+                    id=""
+                    placeholder="Enter Phone number"
+                  />
+                </div>
+                <div className="my-8">
+                  <input
+                    className="bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full"
+                    type="email"
+                    name=""
+                    id=""
+                    placeholder="Enter Email Address"
+                  />
+                </div>
+                <div className="my-8">
+                  <input
+                    className="bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full"
+                    type="number"
+                    name=""
+                    id=""
+                    placeholder="Enter Number of participants"
+                  />
+                </div>
+
+                <div className="my-8">
+                  <input
+                    className=" bg-gradient-to-r from-orange-500 to-purple-900  drop-shadow-2xl text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-full"
+                    type="button"
+                    value="Submit"
+                  />
+                </div>
+
+                <a
+                  href="/host"
+                  className="cursor-pointer flex justify-center items-center font-race text-white text-center"
+                  style={{ color: "white" }}
+                >
+                  Are You A Host ?
+                </a>
+              </form>
+            </CustomTabPanel>
           </Box>
-          <CustomTabPanel value={value} index={0}>
-            <form>
-              {/* <h2 className='text-white font-medium tracking-[0.9px]'>Register as Individual</h2> */}
-              <div className="my-8 flex gap-x-4">
-                <select
-                  value={guest.church_id}
-                  onChange={(e) =>
-                    setGuest((prev) => ({ ...prev, church_id: e.target.value }))
-                  }
-                  className="bg-purple-800 text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full"
-                  name="name"
-                  id=""
-                >
-                  <option value="">Select Church</option>
-                  {churches.filter(c => c.id != 1).map((church) => (
-                    <option key={church.id} value={church.id}>
-                      {church.name}
-                    </option>
-                  ))}
-                </select>
-                <button type="button" onClick={addChurch}>
-                  <BsPlusCircleFill
-                    className="color-white flex justify-center items-center text-white mr-4"
-                    size={30}
-                  />
-                </button>
-              </div>
-              <div className="my-8 flex flex-col border-2 justify-center">
-                <label htmlFor="select-img" className="font-race">
-                  Select image <FaRegImage size={30} className="inline" />
-                </label>
-                {guestPreview && (
-                  <img
-                    className="w-[100px] h-[100px] rounded-full justify-center"
-                    src={guestPreview}
-                    alt=""
-                  />
-                )}
-                <input
-                  onChange={(e) => {
-                    setGuestImage(e.target.files[0]);
-                    setGuestPreview(URL.createObjectURL(e.target.files[0]));
-                  }}
-                  className="bg-transparent text-white border justify-center hidden items-center border-t-0 border-x-0 border-b-1 text-sm  font-race font-thin outline-none w-full"
-                  accept="image/*"
-                  id="select-img"
-                  type="file"
-                />
-              </div>
-              <div className="my-8">
-                <input
-                  value={guest.name}
-                  onChange={(e) =>
-                    setGuest((prev) => ({ ...prev, name: e.target.value }))
-                  }
-                  className="bg-transparent text-white border justify-center items-center border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full"
-                  type="text"
-                  name=""
-                  id=""
-                  placeholder="Enter Full name"
-                  required
-                />
-              </div>
-              <div className="my-8">
-                <input
-                  value={guest.phone}
-                  onChange={(e) =>
-                    setGuest((prev) => ({ ...prev, phone: e.target.value }))
-                  }
-                  className="bg-transparent text-white border-t-0 justify-center items-center border-x-0 border-b-1-1 text-sm font-race font-thin outline-none w-full"
-                  type="text"
-                  name=""
-                  id=""
-                  placeholder="Enter Phone number"
-                  required
-                />
-              </div>
-
-              <div className="my-8">
-                <input
-                  value={guest.email}
-                  onChange={(e) =>
-                    setGuest((prev) => ({ ...prev, email: e.target.value }))
-                  }
-                  className="bg-transparent text-white border-t-0 justify-center items-center border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full"
-                  type="email"
-                  name=""
-                  id=""
-                  placeholder="Enter Email Address"
-                />
-              </div>
-              <div className="my-8">
-                <input
-                  onClick={(e) => {playSound(); createParticipant()}}
-                  className="cursor-pointer bg-gradient-to-r from-orange-800 justify-center items-center to-purple-700 drop-shadow-2xl text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-full"
-                  type="button"
-                  value="Submit"
-                />
-              </div>
-
-              <a
-                href="/host"
-                className="cursor-pointer flex justify-center items-center font-race text-white text-center whitespace-nowrap"
-                style={{ color: "white" }}
-                onClick={playSound}
-              >
-                Are You A Host? Click Here.
-              </a>
-            </form>
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
-            <form onSubmit={createParticipant}>
-              {/* <h2 className='text-white font-medium tracking-[0.9px]'>Register as Church</h2> */}
-
-              <div className="my-8 flex gap-x-4">
-                <select
-                  onChange={(e) => null}
-                  className="bg-purple-800 text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full"
-                  name="name"
-                  id=""
-                >
-                  <option value="">Select Church</option>
-                  {churches.map((church) => (
-                    <option key={church.id}>{church.name}</option>
-                  ))}
-                </select>
-                <button type="button" onClick={addChurch}>
-                  <BsPlusCircleFill
-                    className="color-white flex justify-center items-center text-white mr-4"
-                    size={30}
-                  />
-                </button>
-              </div>
-              <div className="my-8">
-                <input
-                  className="bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full"
-                  type="text"
-                  name=""
-                  id=""
-                  placeholder="Enter Phone number"
-                />
-              </div>
-              <div className="my-8">
-                <input
-                  className="bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full"
-                  type="email"
-                  name=""
-                  id=""
-                  placeholder="Enter Email Address"
-                />
-              </div>
-              <div className="my-8">
-                <input
-                  className="bg-transparent text-white border-t-0 border-x-0 border-b-1 text-sm font-race font-thin outline-none w-full"
-                  type="number"
-                  name=""
-                  id=""
-                  placeholder="Enter Number of participants"
-                />
-              </div>
-
-              <div className="my-8">
-                <input
-                  className=" bg-gradient-to-r from-orange-500 to-purple-900  drop-shadow-2xl text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-full"
-                  type="button"
-                  value="Submit"
-                />
-              </div>
-
-              <a
-                href="/host"
-                className="cursor-pointer flex justify-center items-center font-race text-white text-center"
-                style={{ color: "white" }}
-              >
-                Are You A Host ?
-              </a>
-            </form>
-          </CustomTabPanel>
-        </Box>
-      </div>
-      
-    </motion.div>
-    {modalOpen && (
+        </div>
+      </motion.div>
+      {modalOpen && (
         <div className="bg-gradient-to-r from-[#360023] to-[#0e063a] overflow-x-hidden bg-opacity-50 z-50  flex-col items-center justify-center fixed top-0 left-0 w-screen min-h-full">
           {/* Modal content */}
           <div className="flex justify-around items-center">
@@ -439,19 +438,24 @@ export default function BasicTabs() {
               <AiOutlineDownload size={30} className="text-white" />
             </button>
             <button className=" font-race" onClick={closeModal}>
-               <AiOutlineClose size={30} className="text-white" />
+              <AiOutlineClose size={30} className="text-white" />
             </button>
           </div>
 
-          <div ref={posterRef} className="relative md:h-4/5 md:w-1/2 sm:h-4/5 sm:w-4/5 h-full w-full mt-10 mx-auto" >
-            <img src={Bg} alt="" className="block w-full h-full" /> 
-            <div className="absolute top-0 left-0 w-full h-2/3 flex flex-col items-center justify-center " >
+          <div
+            ref={posterRef}
+            className="relative md:h-4/5 md:w-1/2 sm:h-4/5 sm:w-4/5 h-full w-full mt-10 mx-auto"
+          >
+            <img src={Bg} alt="" className="block w-full h-full" />
+            <div className="absolute top-0 left-0 w-full h-2/3 flex flex-col items-center justify-center ">
               <div className="mt-4 md:mt-8">
-              <img
+                <img
                   src={guestImage ? URL.createObjectURL(guestImage) : ""}
                   alt="user image"
-                  className={` 2xl:h-96 xl:h-60 lg:h-52 md:h-44 sm:h-40 h-32 w-auto rounded-full object-cover ${guestImage ? "" : "hidden"}`}
-                  />
+                  className={` 2xl:h-96 xl:h-60 lg:h-52 md:h-44 sm:h-40 h-32 w-auto rounded-full object-cover ${
+                    guestImage ? "" : "hidden"
+                  }`}
+                />
               </div>
               <div className=" mt-4 lg:mt-8">
                 <p className="text-center text-white uppercase font-medium font-race lg:text-xl  text-sm ">
