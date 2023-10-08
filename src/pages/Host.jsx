@@ -272,7 +272,7 @@ export default function FramerAnimation() {
                 <img
                   src={hostImage ? URL.createObjectURL(hostImage) : ""}
                   alt="user image"
-                  className={` 2xl:h-96 xl:h-60 lg:h-52 md:h-44 sm:h-40 h-32 w-auto rounded-full object-cover ${
+                  className={`2xl:h-96 2xl:w-96 xl:h-60 xl:w-60 lg:h-52 lg:w-52 md:h-44 md:w-44 sm:h-40 sm:w-40 h-32 w-32 rounded-full object-cover ${
                     hostImage ? "" : "hidden"
                   }`}
                 />
