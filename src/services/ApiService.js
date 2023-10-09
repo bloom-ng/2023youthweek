@@ -23,7 +23,8 @@ ApiService.Login = async (email, password) => {
     }
     return res.data;
   } catch (error) {
-    throw new Error(error);
+    // throw new Error(error);
+    return error;
   }
 };
 
@@ -31,6 +32,17 @@ ApiService.ChurchList = async (url) => {
   try {
     let res = await Request.get(url ? url : endpoints.churchList.url);
     return res.data.data;
+  } catch (error) {
+    checkAuth(error);
+    // return error;
+    throw new Error(error);
+  }
+};
+
+ApiService.ParticipantsList = async (url) => {
+  try {
+    let res = await Request.get(url ? url : endpoints.participantList.url);
+    return res.data;
   } catch (error) {
     checkAuth(error);
     // return error;

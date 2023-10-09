@@ -1,59 +1,137 @@
-import React from 'react'
-import {AiTwotoneHome} from 'react-icons/ai'
-import { Link } from 'react-router-dom';
-import {BsPlusCircleFill} from 'react-icons/bs'
+/* eslint-disable no-unused-vars */
+import React from "react";
+import ApiService from "../services/ApiService";
+import { AuthContext } from "../providers/AuthProvider";
+import { useNavigate, Navigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
-function Login() {
+const Login = () => {
+  const { dispatch } = React.useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    let response = await ApiService.Login(email, password);
+    console.log(response, "response Auth");
+    if (response?.response?.data?.errors) {
+      Swal.fire({
+        title: "Error",
+        icon: "error",
+        text: response.response.data.message,
+        // timer: 2000,
+      });
+      setLoading(false);
+    } else {
+      console.log(response);
+      dispatch({
+        type: "LOGIN",
+        payload: response,
+      });
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("user", JSON.stringify(response.user));
+      setLoading(false);
+      setSuccess(true);
+      // return navigate('/invoice');
+      // location.reload();
+    }
+  };
+
   return (
-    <>   
-     <div className="px-10 md:px-20 flex flex-col justify-center items-center bg-gradient-to-r from-[#360023] to-[#0e063a] h-screen w-screen">
-  
-    <div className=' flex-col flex justify-center items-center py-4 '>
-    <div className="flex justify-center text-2xl uppercase py-2 font-race items-center text-white font-semibold tracking-wide pt-4">
-    <Link to="/">
-      <AiTwotoneHome size={30} className='inline mr-2'/></Link>
-    Host registration
-    </div>
-    
-    <div className="grid grid-cols-1 md:grid-cols-1 my-3 md:gap-32">
-    <div>
-    <form>
-    
-    <div className='my-8'>
-    <input className='bg-transparent text-white border border-t-0 border-x-0 border-b-1  text-sm font-race font-thin outline-none w-72' type="name" name="" id="" placeholder='Enter Full name' />
-    </div>
-    <div className='my-8'>
-    <input className='bg-transparent text-white border border-t-0 border-x-0 border-b-1  text-sm font-race font-thin outline-none w-72' type="number" name="" id="" placeholder='Enter Phone number' />
-    </div>
-    <div className='my-8'>
-    <select className='bg-transparent text-white border border-t-0 border-x-0 border-b-1  text-sm font-race font-thin outline-none w-72' name="name" id="">
-      
-    <option value="">Select Church</option>
-   
-    </select>   
-    <a href="" ><button ><BsPlusCircleFill className="color-white flex justify-center items-center text-white mr-4" size={30}/></button></a>    
-        
-    </div>
-    
-    <div className='my-8'>
-    <input className='bg-transparent text-white border border-t-0 border-x-0 border-b-1  text-sm font-race font-thin outline-none w-72' type="email" name="" id="" placeholder='Enter Email Address' />
-    </div>
-    <div className='my-8'>
-    <input className=' bg-gradient-to-r from-orange-500 to-purple-900 text-white rounded-xl py-2 text-sm font-race font-bold outline-none w-72' type="button" value="Submit"  />
+    <>
+      {success && <Navigate to="/dashboard" replace={true} />}
+      <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-md space-y-8">
+          <div>
+            <img
+              className="mx-auto h-12 w-auto hidden"
+              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              alt="Your Company"
+            />
+            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+              Sign in to continue
+            </h2>
+          </div>
+          <form className="mt-8 space-y-12" onSubmit={handleLogin}>
+            <input type="hidden" name="remember" defaultValue="true" />
+            <div className=" space-y-px rounded-md shadow-sm">
+              <div className="py-4">
+                <label htmlFor="email-address" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  id="email-address"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  className="relative block w-full rounded-t-md border-0 px-2 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  placeholder="Email address"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div>
+                <label htmlFor="password" className="sr-only">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  className="relative block w-full rounded-b-md border-0 px-2 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+            </div>
 
-    </div>
- 
- 
-<a href='/register' className='flex justify-center items-center font-race text-white text-center' sx={{ color: 'white' }} onClick={playSound}>Are You A Guest ?</a>
-    </form>
-    </div>
-   
-    </div>
-    </div>
-    </div>
+            <div className=" items-center justify-between hidden">
+              <div className="flex items-center">
+                <input
+                  id="remember-me"
+                  name="remember-me"
+                  type="checkbox"
+                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                />
+                <label
+                  htmlFor="remember-me"
+                  className="ml-2 block text-sm text-gray-900"
+                >
+                  Remember me
+                </label>
+              </div>
+
+              <div className="text-sm">
+                <a
+                  href="#"
+                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                >
+                  Forgot your password?
+                </a>
+              </div>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                className="group relative flex w-full justify-center rounded-md bg-gradient-to-r from-orange-500 to-purple-900 text-white py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                {loading ? "Signing In" : "Sign in"}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </>
+  );
+};
 
-  )
-}
-
-export default Login
+export default Login;
