@@ -38,7 +38,7 @@ const Login = () => {
       localStorage.setItem("user", JSON.stringify(response.user));
       setLoading(false);
       setSuccess(true);
-      return setTimeout(() =>  navigate('/participants'), 2000 )
+      return setTimeout(() =>  navigate('/participants'), 3000 )
       // location.reload();
     }
   };

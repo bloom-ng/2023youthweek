@@ -15,11 +15,12 @@ import { FaRegImage } from "react-icons/fa";
 import html2canvas from "html2canvas";
 import Bg from "../assets/background.png";
 import At from "../assets/bg.jpg";
+import { getGroupType } from "../utils/Types";
 
 export default function FramerAnimation() {
   const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
   const [churches, setChurches] = React.useState([]);
-  const [newChurch, setNewChurch] = React.useState({ name: "" });
+  const [team, setTeam] = React.useState("");
   const [hostImage, setHostImage] = React.useState(null);
   const [hostPreview, setHostPreview] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -98,6 +99,7 @@ export default function FramerAnimation() {
 
       const response = await ApiService.ParticipantCreate(fData);
       if (response.data) {
+        setTeam(response.data.group)
         setModalOpen(true);
         downloadPoster();
       } else if (response?.response?.data?.errors) {
@@ -280,6 +282,9 @@ export default function FramerAnimation() {
               <div className=" mt-4 lg:mt-8">
                 <p className="text-center text-white uppercase font-medium font-race lg:text-xl  text-sm ">
                   {host.name}
+                </p>
+                <p className="text-center text-white uppercase font-medium font-race lg:text-xl  text-sm ">
+                  #TEAM-{getGroupType(team)}
                 </p>
               </div>
             </div>
