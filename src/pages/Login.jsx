@@ -38,14 +38,14 @@ const Login = () => {
       localStorage.setItem("user", JSON.stringify(response.user));
       setLoading(false);
       setSuccess(true);
-      // return navigate('/invoice');
+      return setTimeout(() =>  navigate('/participants'), 2000 )
       // location.reload();
     }
   };
 
   return (
     <>
-      {success && <Navigate to="/dashboard" replace={true} />}
+      {/* {success && <Navigate to="/participants" replace={true} />} */}
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>
