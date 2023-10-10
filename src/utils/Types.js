@@ -1,34 +1,34 @@
 export const ParticipantTypes = [
-    {key: 0, name: "Host"},
-    {key: 1, name: "Guest"},
-]
+  { key: 0, name: "Host" },
+  { key: 1, name: "Guest" },
+];
 
 export const GroupTypes = [
-    {key: 1, name: "Abidoye"},
-    {key: 2, name: "Ogundele"},
-    {key: 3, name: "Odudare"},
-]
+  { key: 1, name: "Abidoye - Grey" },
+  { key: 2, name: "Ogundele - white" },
+  { key: 3, name: "Odudare - Orange" },
+];
 
 export const getGroupType = (group) => {
-    switch (group) {
-        case 1:
-            return "Abidoye"
-        case 2:
-            return "Ogundele"
-        case 3:
-            return "Odudare"
-    
-        default:
-            return "";
-    }
-}
+  switch (group) {
+    case 1:
+      return "Abidoye - Grey";
+    case 2:
+      return "Ogundele - white";
+    case 3:
+      return "Odudare - Orange";
+
+    default:
+      return "";
+  }
+};
 
 export const getParticipantType = (type) => {
-    switch (type) {
-        case 0:
-            return "Host"
-        
-        default:
-            return "Guest";
-    }
-}
+  switch (type) {
+    case 0:
+      return "Host";
+
+    default:
+      return "Guest";
+  }
+};
