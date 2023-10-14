@@ -14,6 +14,7 @@ const Participants = () => {
   const [pagination, setPagination] = React.useState({ links: {}, meta: {} });
   const [type, setType] = React.useState(null);
   const [group, setGroup] = React.useState(null);
+  const [count, setCount] = React.useState({});
 
   const getParticipants = async (url) => {
     try {
@@ -36,6 +37,13 @@ const Participants = () => {
     }
   };
 
+  const getInfo = async () => {
+    const info = await ApiService.ParticipantsInfo();
+
+    setCount(info.data);
+    console.log(info, "info");
+  };
+
   const filter = async () => {
     await getParticipants(
       `https://api.csmcgethsemanehq.com/api/youthweek/participants/${type}/${group}`
@@ -46,6 +54,7 @@ const Participants = () => {
     (async () => {
       await getParticipants();
       await getChurches();
+      await getInfo();
     })();
   }, []);
   return (
@@ -53,7 +62,6 @@ const Participants = () => {
       <div className="rounded-lg border border-gray-200 px-8 my-4 w-full">
         <h1 className="font-bold my-8">Participants</h1>
         <div className="mb-12">
-          <p></p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-1">
             <div className="sm:col-span-1">
               <label
@@ -125,6 +133,28 @@ const Participants = () => {
             Search
           </button>
         </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-3 gap-4">
+          <div className="shadow shadow-sm rounded-md bg-neutral-100 border border-neutral-200 p-8 flex flex-col gap-4 items-start">
+            <h1 className="text-2xl font-bold">Total Host</h1>
+            <p>{count.host}</p>
+          </div>
+          <div className="shadow shadow-sm rounded-md bg-neutral-100 border border-neutral-200 p-8 flex flex-col gap-4 items-start">
+            <h1 className="text-2xl font-bold">Total Guest</h1>
+            <p>{count.guest}</p>
+          </div>
+          <div className="shadow shadow-sm rounded-md bg-neutral-100 border border-neutral-200 p-8 flex flex-col gap-4 items-start">
+            <h1 className="text-2xl font-bold">Team Abidoye (Grey)</h1>
+            <p>{count.abidoye}</p>
+          </div>
+          <div className="shadow shadow-sm rounded-md bg-neutral-100 border border-neutral-200 p-8 flex flex-col gap-4 items-start">
+            <h1 className="text-2xl font-bold">Team Ogundele (White)</h1>
+            <p>{count.ogundele}</p>
+          </div>
+          <div className="shadow shadow-sm rounded-md bg-neutral-100 border border-neutral-200 p-8 flex flex-col gap-4 items-start">
+            <h1 className="text-2xl font-bold">Team Odudare (Orange)</h1>
+            <p>{count.odudare}</p>
+          </div>
+        </div>
         <div className="overflow-x-auto rounded-t-lg">
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
             <thead className="ltr:text-left rtl:text-right">
@@ -172,7 +202,6 @@ const Participants = () => {
             </tbody>
           </table>
         </div>
-
         <div className="rounded-b-lg border-t border-gray-200 px-4 py-2">
           <ol className="flex justify-end gap-1 text-xs font-medium">
             <li>

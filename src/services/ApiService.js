@@ -50,6 +50,17 @@ ApiService.ParticipantsList = async (url) => {
   }
 };
 
+ApiService.ParticipantsInfo = async (url) => {
+  try {
+    let res = await Request.get(url ? url : endpoints.participantInfo.url);
+    return res.data;
+  } catch (error) {
+    checkAuth(error);
+    // return error;
+    throw new Error(error);
+  }
+};
+
 ApiService.ParticipantCreate = async (data) => {
   try {
     let res = await Request.post(endpoints.participantCreate.url, data);

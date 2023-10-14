@@ -8,6 +8,11 @@ export default {
   },
   churchList: { url: baseURL + "churches", method: "GET", auth: true },
   participantList: { url: baseURL + "participants", method: "GET", auth: true },
+  participantInfo: {
+    url: baseURL + "participants/info",
+    method: "GET",
+    auth: true,
+  },
   churchCreate: { url: baseURL + "churches", method: "POST", auth: false },
   participantCreate: {
     url: baseURL + "participants",

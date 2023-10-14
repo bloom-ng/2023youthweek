@@ -40,16 +40,16 @@ export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
   React.useEffect(() => {
-    // const token = localStorage.getItem("token");
-    // if (token != "undefined" && token != null) {
-    //   dispatch({
-    //     type: "LOGIN",
-    //     payload: {
-    //       user: localStorage.getItem("user"),
-    //       token,
-    //     },
-    //   });
-    // }
+    const token = localStorage.getItem("token");
+    if (token != "undefined" && token != null) {
+      dispatch({
+        type: "LOGIN",
+        payload: {
+          user: localStorage.getItem("user"),
+          token,
+        },
+      });
+    }
   }, []);
 
   return (
