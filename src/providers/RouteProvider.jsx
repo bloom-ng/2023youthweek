@@ -19,15 +19,29 @@ const RouteProvider = () => {
       <Route path="/login" exact element={<Login />} />
       {state.token ? (
         <>
-        
-          <Route path="/participants" exact element={<Wrapper><Participants /></Wrapper> } />
-          <Route path="/churches" exact element={<Wrapper><Churches /></Wrapper>} />
+          <Route
+            path="/participants"
+            exact
+            element={
+              <Wrapper>
+                <Participants />
+              </Wrapper>
+            }
+          />
+          <Route
+            path="/churches"
+            exact
+            element={
+              <Wrapper>
+                <Churches />
+              </Wrapper>
+            }
+          />
         </>
       ) : (
         <Route path="/" exact element={<Home />} />
       )}
-      <Route path="*" exact element={<Home />} />
-
+      {/* <Route path="*" exact element={<Home />} /> */}
     </Routes>
   );
 };

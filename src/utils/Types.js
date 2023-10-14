@@ -5,7 +5,7 @@ export const ParticipantTypes = [
 
 export const GroupTypes = [
   { key: 1, name: "Abidoye - Grey" },
-  { key: 2, name: "Ogundele - white" },
+  { key: 2, name: "Ogundele - White" },
   { key: 3, name: "Odudare - Orange" },
 ];
 
